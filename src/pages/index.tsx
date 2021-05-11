@@ -1,62 +1,33 @@
-import Head from 'next/head';
+import { GetServerSideProps } from "next";
 
-import { CompletedChallenges } from "../components/CompletedChallenges";
-import { Countdown } from "../components/Countdown";
-import { ExperienceBar } from "../components/ExperienceBar";
-import { Profile } from "../components/Profile";
-import { GetServerSideProps } from 'next';
-import { ChallengesProvider } from "../contexts/ChallengesContext";
+import { ChallengesContext } from "../contexts/ChallengesContext";
+import Link from "next/link";
 
-import styles from '../styles/pages/Home.module.css'
-import { ChallengesBox } from "../components/ChallengesBox";
-import { CountdownProvider } from '../contexts/CountdownContext';
+import styles from "../styles/pages/Main.module.css";
+import { useContext } from "react";
 
-interface HomeProps {
-  level: number;
-  currentExperience: number;
-  challengesCompleted: number;
-}
+export default function Login() {
+  const { level, resetCookie } = useContext(ChallengesContext);
 
-export default function Home(props: HomeProps) {
   return (
-  <ChallengesProvider 
-    level={props.level}
-    currentExperience={props.currentExperience}
-    challengesCompleted={props.challengesCompleted}
-    >
-      <div className={styles.container}>
-        <Head>
-          <title>Inicio | move.it</title>
-        </Head>
-
-        <ExperienceBar />
-
-        <CountdownProvider>
-        <section>
-          <div>
-            <Profile />
-            <CompletedChallenges />
-            <Countdown />
-          </div>
-          <div>
-            <ChallengesBox />
-          </div>
-        </section>
-        </CountdownProvider>
-      </div>
-  </ChallengesProvider>
-  )
+    <div className={styles.profileContainer}>
+      <button type="button" onClick={resetCookie}>
+        Let's Move Yourself <br />
+        <b>Délcio Francisco</b> <br /> 
+        <Link href="/main">Entrar 🤓</Link>
+      </button>
+    </div>
+  );
 }
 
 export const getServerSideProps: GetServerSideProps = async (cnt) => {
-  
-  const { level, currentExperience, challengesCompleted } = cnt.req.cookies
+  const { level, currentExperience, challengesCompleted } = cnt.req.cookies;
 
   return {
     props: {
-      level: Number(level), 
-      currentExperience: Number(currentExperience), 
-      challengesCompleted: Number(challengesCompleted)
-    }
-  }
-}
+      level: Number(level),
+      currentExperience: Number(currentExperience),
+      challengesCompleted: Number(challengesCompleted),
+    },
+  };
+};

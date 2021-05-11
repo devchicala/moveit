@@ -1,0 +1,13 @@
+.profileContainer {
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+}
+
+.profileContainer button {
+    width: 550px;
+    height: 170px;
+    font-size: 40px;
+    padding: 10px;
+}

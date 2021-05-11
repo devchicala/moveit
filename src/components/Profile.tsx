@@ -15,7 +15,6 @@ export function Profile() {
           Level {level}
         </p>
       </div>
-      <button type="button" onClick={resetCookie}>Zerar</button>
     </div>
   );
 }
